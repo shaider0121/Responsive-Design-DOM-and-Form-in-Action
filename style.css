@@ -1,0 +1,63 @@
+body {
+    font-family: Arial;
+    padding: 20px;
+    background-color:beige
+}
+
+input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#student-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.student-card {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+.student-card button {
+    background-color: red;
+    color: white;
+    border: none;
+}
+
+
+@media (min-width: 600px) {
+    #student-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+@media (min-width: 1024px) {
+    main {
+        display: flex;
+        gap: 20px;
+    }
+
+    main section:first-child {
+        width: 250px;
+    }
+
+    main section:last-child {
+        flex: 1;
+    }
+
+    #student-list {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+
+}
