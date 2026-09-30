@@ -1,34 +1,67 @@
-const form = document.getElementById('student-form');
-const nameInput = document.getElementById('studentName');
-const programInput = document.getElementById('program');
-const list = document.getElementById('student-list');
-const emptyMsg = document.getElementById('empty-message');
+let students =[
+  {id: 1, name: 'Rio D ', program: 'BSIT'},
+  {id: 2, name: 'Ms De Lunas ', program: 'BSIT'},
+  {id: 3, name: ' Ms Bebot', program: 'BSIT'},
+  {id: 4, name: 'Julius Aquino', program: 'BSIT'},
+  {id: 5, name: 'Alexis Samontañez', program: 'BSIT'}
+  
+];
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
+const createListItem = (student)=>{
+  //* create element *//
+  const article = document.createElement('article');
+  const h2 = document.createElement('h2');
+  const p = document.createElement('p');
+  const button = document.createElement('button');
 
-    const name = nameInput.value;
-    const program = programInput.value;
 
-    if (name === '' || program === '') {
-        alert('Fill in all fields');
-        return;
-    }
+//* Add value *//
+h2.innerText = student.name
+p.innerText = student.program
+button.innerText = 'Delete';
+button.addEventListener('click',() =>{
+  const newStudent = students.filter((s) => s.id !== student.id)
+  students = newStudent;
+  displayList();
+  
+});
 
-    emptyMsg.style.display = 'none';
+//* add class*//
+article.classList.add('list-item');
 
-    const card = document.createElement('div');
-    card.className = 'student-card';
-    card.innerHTML = '<h3>' + name + '</h3><p>' + program + '</p><button>Remove</button>';
+//* insert *//
+article.append(h2);
+article.append(p);
+article.append(button);
 
-    list.appendChild(card);
+return article;
+}
 
-    form.reset();
 
-    card.querySelector('button').addEventListener('click', function() {
-        card.remove();
-        if (list.querySelectorAll('.student-card').length === 0) {
-            emptyMsg.style.display = 'block';
-        }
-    });
+const list = document.querySelector('#studentlist');
+
+const displayList = () =>{
+  list.replaceChildren();
+  const studentlist = students.map((s) => createListItem(s));
+  studentlist.forEach((s) => list.append(s));
+}
+displayList();
+
+const form = document.querySelector('#studentForm');
+const nameField = document.querySelector('#name');
+const programField = document.querySelector('#program');
+form.addEventListener('submit',(e) => {
+  e.preventDefault();
+  const name = nameField.value;
+  const program = programField.value;
+  const newStudent = {
+    id: students.length + 1, 
+    name, 
+    program
+  }
+  students.push(newStudent);
+  nameField.value = '';
+  programField.value = '';
+  displayList();
+  
 });
